@@ -34,7 +34,7 @@ def show_questionnaire():
     current_trial = st.session_state.current_trial
 
     st.subheader(
-        "Proszę ocenić swoje odczucia na temat robota, w skali od 1 do 5"
+        "Proszę ocenić swoje odczucia na temat chatbota, w skali od 1 do 5"
     )
 
     with st.form("questionnaire"):
@@ -79,10 +79,8 @@ def show_questionnaire():
                 "fifth_item": fifth_item
             }
 
-            # Dodajemy kwestionariusz do aktualnego trialu
             st.session_state.current_trial_data["questionnaire"] = questionnaire
 
-            # Zapisujemy cały ukończony trial
             st.session_state.trial_results.append(
                 st.session_state.current_trial_data
             )
@@ -92,11 +90,10 @@ def show_questionnaire():
                 trial_number=st.session_state.current_trial + 1,
                 trial_data=trial_data
                 )
-            # Czyścimy dane aktualnego trialu
+            
             st.session_state.current_trial_data = None
             st.session_state.messages = []
 
-            # Przechodzimy do kolejnego trialu
             st.session_state.current_trial += 1
 
             if st.session_state.current_trial < 3:

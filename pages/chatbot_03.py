@@ -5,6 +5,7 @@ from utils.state import go_to
 
 
 def stream_text(text, condition, total_time=5):
+
     if condition == "letter":
         units = list(text)
 
@@ -38,7 +39,7 @@ def show_experiment():
     condition = st.session_state.trials[current_trial]["condition"]
     task = st.session_state.trials[current_trial]["task"]
 
-    # Inicjalizacja stanu
+
     if "messages" not in st.session_state:
         st.session_state.messages = []
 
@@ -67,7 +68,7 @@ def show_experiment():
             "Zadanie zakończone. Zjedź na dół strony i uzupełnij pole z odpowiedzią."
         )
 
-    # Przycisk zakończenia rozmowy
+
     if not st.session_state.task_finished:
 
         if st.button("KOŃCZĘ ZADANIE"):
@@ -86,16 +87,12 @@ def show_experiment():
         Nie zmieniaj tematu rozmowy.
     """
 
-    client = OpenAI(
-        api_key=st.secrets["OPENAI_API_KEY"]
-    )
+    client = OpenAI(api_key=st.secrets["OPENAI_API_KEY"])
 
-    # Historia rozmowy
     for message in st.session_state.messages:
         with st.chat_message(message["role"]):
             st.write(message["content"])
 
-    # Chat działa tylko dopóki zadanie nie zostało zakończone
     if not st.session_state.task_finished:
 
         if prompt := st.chat_input("Napisz wiadomość"):
@@ -114,7 +111,6 @@ def show_experiment():
                 input=st.session_state.messages
             )
 
-            # Odpowiedź chatbota ze streamingiem
             with st.chat_message("assistant"):
                 placeholder = st.empty()
                 displayed_text = ""

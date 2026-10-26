@@ -39,7 +39,6 @@ def save_trial(trial_number, trial_data):
     with get_connection() as conn:
         with conn.cursor() as cur:
 
-            # 1. Zapis trialu
             cur.execute(
                 """
                 INSERT INTO trials (
@@ -63,7 +62,7 @@ def save_trial(trial_number, trial_data):
 
             trial_id = cur.fetchone()[0]
 
-            # 2. Zapis wiadomości
+
             for order, message in enumerate(trial_data["messages"], start=1):
                 cur.execute(
                     """
@@ -83,7 +82,7 @@ def save_trial(trial_number, trial_data):
                     )
                 )
 
-            # 3. Zapis kwestionariusza
+
             questionnaire = trial_data["questionnaire"]
 
             cur.execute(
